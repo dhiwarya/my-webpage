@@ -14,6 +14,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get('/')
+def read_root():
+    return {'Hello': 'World'}
+
 Base.metadata.create_all(bind=engine)
 app.include_router(auth_router)
 app.include_router(posts_router)
