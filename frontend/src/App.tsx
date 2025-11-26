@@ -67,16 +67,26 @@ function AppContent() {
     return <LoginPage />;
   }
 
-  if (currentPage === 'admin' && isAuthenticated) {
+  if (currentPage === 'admin') {
+    // Redirect to login if not authenticated
+    if (!isAuthenticated) {
+      window.location.hash = 'login';
+      return null;
+    }
     return <AdminDashboard />;
   }
 
+  // Navigation items - only show Admin if authenticated
   const navItems = [
     { label: "Homepage", href: "#" },
     { label: "Projects", href: "#projects" },
     { label: "Blog", href: "#blog" },
-    { label: "Admin", href: "#login" },
-  ]
+  ];
+
+  // Add Admin link only for authenticated users
+  if (isAuthenticated) {
+    navItems.push({ label: "Admin", href: "#admin" });
+  }
 
   return (
     <div className="min-h-screen bg-background">
